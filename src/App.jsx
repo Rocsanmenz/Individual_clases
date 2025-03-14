@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./assets/Database/authcontext";
-import ProtectedRoute from "./assets/Components/ProtectedRoute"; 
-import Login from './assets/Views/Login'
-import Encabezado from "./assets/Components/Encabezado";
-import Inicio from "./assets/Views/Inicio";
+import { AuthProvider } from "./database/authcontext";
+import ProtectedRoute from "./components/ProtectedRoute"; 
+import Login from './views/Login'
+import Encabezado from "./components/Encabezado";
+import Inicio from "./views/Inicio";
 
-import "./App.css";
+import './App.css'
 
 function App() {
 

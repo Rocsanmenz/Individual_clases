@@ -1,13 +1,12 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import LoginForm from "../components/LoginForm";
-import { appfirebase } from "../Database/firebaseConfig";
+import { appfirebase } from "../database/firebaseconfig";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from "../database/authcontext";
 
-import "../../App.css";
+import "../App.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
