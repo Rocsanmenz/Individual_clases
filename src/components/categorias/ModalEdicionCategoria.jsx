@@ -24,7 +24,7 @@ const ModalEdicionCategoria = ({
               name="nombre"
               value={categoriaEditada.nombre}
               onChange={handleEditInputChange}
-              placeholder="Ingresa el nombre"
+              placeholder="Ingresa el nombre de Categoria"
             />
           </Form.Group>
           <Form.Group className="mb-3">
