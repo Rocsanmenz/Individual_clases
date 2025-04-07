@@ -15,6 +15,7 @@ import ModalRegistroProducto from "../components/productos/ModalRegistroProducto
 import ModalEdicionProducto from "../components/productos/ModalEdicionProducto";
 import ModalEliminacionProducto from "../components/productos/ModalEliminacionProducto";
 import Cuadrobusqueda from "../components/busquedas/CuadroBusquedas";
+import Paginacion from "../components/ordenamiento/Paginacion";
 
 const Productos = () => {
   const [productos, setProductos] = useState([]);
@@ -28,10 +29,14 @@ const Productos = () => {
     nombre: "",
     precio: "",
     categoria: "",
-    imagen: ""
+    imagen: "",
   });
   const [productoEditado, setProductoEditado] = useState(null);
   const [productoAEliminar, setProductoAEliminar] = useState(null);
+
+  // Paginación
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const productosCollection = collection(db, "productos");
   const categoriasCollection = collection(db, "categorias");
@@ -44,7 +49,7 @@ const Productos = () => {
         id: doc.id,
       }));
       setProductos(fetchedProductos);
-      setProductosFiltrados(fetchedProductos); // también inicializa los filtrados
+      setProductosFiltrados(fetchedProductos);
 
       const categoriasData = await getDocs(categoriasCollection);
       const fetchedCategorias = categoriasData.docs.map((doc) => ({
@@ -64,10 +69,11 @@ const Productos = () => {
   const handleSearchChange = (e) => {
     const text = e.target.value.toLowerCase();
     setSearchText(text);
+    setCurrentPage(1); // Reiniciar paginación
 
     const filtrados = productos.filter((producto) =>
       producto.nombre.toLowerCase().includes(text) ||
-      producto.descripcion?.toLowerCase().includes(text) || // opcional
+      producto.descripcion?.toLowerCase().includes(text) ||
       producto.categoria?.toLowerCase().includes(text)
     );
 
@@ -159,48 +165,69 @@ const Productos = () => {
     setShowDeleteModal(true);
   };
 
+  // Calcular productos paginados
+  const paginatedProductos = productosFiltrados.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <Container className="mt-5">
-      <br />
-      <h4>Gestión de Productos</h4>
-      <Button className="mb-3" onClick={() => setShowModal(true)}>
-        Agregar producto
-      </Button>
+      
+      <>
+        <h4>Gestión de Productos</h4>
+        <Button className="mb-3" onClick={() => setShowModal(true)}>
+          Agregar producto
+        </Button>
 
-      <Cuadrobusqueda
-        searchText={searchText}
-        handeleSearchChange={handleSearchChange}
-      />
+        <Cuadrobusqueda
+          searchText={searchText}
+          handeleSearchChange={handleSearchChange}
+        />
 
-      <TablaProductos
-        productos={productosFiltrados}
-        openEditModal={openEditModal}
-        openDeleteModal={openDeleteModal}
-      />
+        <TablaProductos
+          productos={paginatedProductos}
+          openEditModal={openEditModal}
+          openDeleteModal={openDeleteModal}
+          totalItems={productosFiltrados.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
 
-      <ModalRegistroProducto
-        showModal={showModal}
-        setShowModal={setShowModal}
-        nuevoProducto={nuevoProducto}
-        handleInputChange={handleInputChange}
-        handleImageChange={handleImageChange}
-        handleAddProducto={handleAddProducto}
-        categorias={categorias}
-      />
-      <ModalEdicionProducto
-        showEditModal={showEditModal}
-        setShowEditModal={setShowEditModal}
-        productoEditado={productoEditado}
-        handleEditInputChange={handleEditInputChange}
-        handleEditImageChange={handleEditImageChange}
-        handleEditProducto={handleEditProducto}
-        categorias={categorias}
-      />
-      <ModalEliminacionProducto
-        showDeleteModal={showDeleteModal}
-        setShowDeleteModal={setShowDeleteModal}
-        handleDeleteProducto={handleDeleteProducto}
-      />
+        <Paginacion
+          itemsPerPage={itemsPerPage}
+          totalItems={productosFiltrados.length}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+
+        <ModalRegistroProducto
+          showModal={showModal}
+          setShowModal={setShowModal}
+          nuevoProducto={nuevoProducto}
+          handleInputChange={handleInputChange}
+          handleImageChange={handleImageChange}
+          handleAddProducto={handleAddProducto}
+          categorias={categorias}
+        />
+
+        <ModalEdicionProducto
+          showEditModal={showEditModal}
+          setShowEditModal={setShowEditModal}
+          productoEditado={productoEditado}
+          handleEditInputChange={handleEditInputChange}
+          handleEditImageChange={handleEditImageChange}
+          handleEditProducto={handleEditProducto}
+          categorias={categorias}
+        />
+
+        <ModalEliminacionProducto
+          showDeleteModal={showDeleteModal}
+          setShowDeleteModal={setShowDeleteModal}
+          handleDeleteProducto={handleDeleteProducto}
+        />
+      </>
     </Container>
   );
 };
