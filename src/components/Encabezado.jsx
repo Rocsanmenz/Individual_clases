@@ -107,6 +107,15 @@ const Encabezado = () => {
                 <strong>Libros</strong>
               </Nav.Link>
 
+              <Nav.Link
+                onClick={() => handleNavigate("/clima")}
+              className={isCollapsed ? "color-texto-marca" : "text-white"}
+            >
+              {isCollapsed ? <i className="bi-cloud-sun-fill me-2"></i> : null}
+              <strong>Clima</strong>
+
+</Nav.Link>
+
                   <Nav.Link onClick={handleLogout} className={isCollapsed ? "text-black" : "text-white"}>
                     Cerrar Sesión
                   </Nav.Link>

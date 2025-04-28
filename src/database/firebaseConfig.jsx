@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage"; // !Agrega Firebase Storage
+import { initializeFirestore, persistentLocalCache } from "firebase/firestore"
+
 
 // todoConfiguración de Firebase usando variables de entorno
 const firebaseConfig = {
@@ -18,7 +19,19 @@ const firebaseConfig = {
 const appfirebase = initializeApp(firebaseConfig);
 
 // ?Inicializa Firestore
-const db = getFirestore(appfirebase);
+let db;
+try {
+  db = initializeFirestore(appfirebase, {
+    localCache: persistentLocalCache({
+      cacheSizeBytes: 100 * 1024 * 1024, // 100 MB (opcional, para limitar tamaño)
+    }),
+  });
+  console.log("Firestore inicializado con persistencia offline.");
+} catch (error) {
+  console.error("Error al inicializar Firestore con persistencia:", error);
+  // Fallback: inicializar sin persistencia si falla
+  db = initializeFirestore(appfirebase, {});
+}
 
 // ?Inicializa Firestore
 const storage = getStorage(appfirebase);
@@ -26,4 +39,4 @@ const storage = getStorage(appfirebase);
 // ?Inicializa Authentication
 const auth = getAuth(appfirebase);
 
-export {appfirebase,db,auth,storage};
+export { appfirebase, db, auth, storage};

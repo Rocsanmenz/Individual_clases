@@ -5,7 +5,6 @@ import { collection, updateDoc, getDocs, doc } from "firebase/firestore";
 import TarjetaProducto from "../components/catalogo/TarjetaProducto";
 import ModalEdicionProducto from "../components/productos/ModalEdicionProducto";
 import Cuadrobusqueda from "../components/busquedas/CuadroBusquedas";
-import Paginacion from "../components/ordenamiento/Paginacion";
 
 const Catalogo = () => {
   const [productos, setProductos] = useState([]);
@@ -14,10 +13,6 @@ const Catalogo = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
   const [searchText, setSearchText] = useState("");
-
-  // Paginación
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
 
   const productosCollection = collection(db, "productos");
   const categoriasCollection = collection(db, "categorias");
@@ -45,7 +40,6 @@ const Catalogo = () => {
   const handeleSearchChange = (e) => {
     const text = e.target.value.toLowerCase();
     setSearchText(text);
-    setCurrentPage(1); // Reiniciar paginación al buscar
   };
 
   const handleEditInputChange = (e) => {
@@ -101,12 +95,6 @@ const Catalogo = () => {
     return coincideCategoria && coincideBusqueda;
   });
 
-  // Productos a mostrar por página
-  const paginatedProductos = productosFiltrados.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
   return (
     <Container className="mt-5">
       <ModalEdicionProducto
@@ -127,10 +115,7 @@ const Catalogo = () => {
             <Form.Label>Filtrar por categoría:</Form.Label>
             <Form.Select
               value={categoriaSeleccionada}
-              onChange={(e) => {
-                setCategoriaSeleccionada(e.target.value);
-                setCurrentPage(1); // Reiniciar página al filtrar
-              }}
+              onChange={(e) => setCategoriaSeleccionada(e.target.value)}
             >
               <option value="Todas">Todas</option>
               {categorias.map((categoria) => (
@@ -151,8 +136,8 @@ const Catalogo = () => {
       </Row>
 
       <Row>
-        {paginatedProductos.length > 0 ? (
-          paginatedProductos.map((producto) => (
+        {productosFiltrados.length > 0 ? (
+          productosFiltrados.map((producto) => (
             <TarjetaProducto
               key={producto.id}
               producto={producto}
@@ -163,15 +148,9 @@ const Catalogo = () => {
           <p>No hay productos que coincidan con la búsqueda.</p>
         )}
       </Row>
-
-      <Paginacion
-        itemsPerPage={itemsPerPage}
-        totalItems={productosFiltrados.length}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
     </Container>
   );
 };
 
 export default Catalogo;
+
