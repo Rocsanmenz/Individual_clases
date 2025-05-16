@@ -8,7 +8,7 @@ import Categorias from "./views/categorias";
 import Productos from "./views/productos";
 import Catalogo from "./views/Catalogo";
 import Libros from "./views/Libros";
-import Pronunciacion from "./views/Pronunciacion";
+import Pronunciacion from "./views/pronunciacion";
 import './App.css'
 import Clima from "./views/Clima";
 
