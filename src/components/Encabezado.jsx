@@ -114,7 +114,24 @@ const Encabezado = () => {
               {isCollapsed ? <i className="bi-cloud-sun-fill me-2"></i> : null}
               <strong>Clima</strong>
 
-</Nav.Link>
+           </Nav.Link>
+
+           <Nav.Link
+                onClick={() => handleNavigate("/Pronunciacion")}
+              className={isCollapsed ? "color-texto-marca" : "text-white"}
+            >
+              {isCollapsed ? <i className="bi-cloud-sun-fill me-2"></i> : null}
+              <strong>Pronunciacion</strong>
+
+           </Nav.Link>
+
+           <Nav.Link
+                onClick={() => handleNavigate("/")}
+                className={isCollapsed ? "color-texto-marca" : "text-white"}
+              >
+                {isCollapsed ? <i className="bi-house-door-fill me-2"></i> : null}
+                <strong>Libros</strong>
+              </Nav.Link>
 
                   <Nav.Link onClick={handleLogout} className={isCollapsed ? "text-black" : "text-white"}>
                     Cerrar Sesión
