@@ -9,6 +9,7 @@ import Productos from "./views/productos";
 import Catalogo from "./views/Catalogo";
 import Libros from "./views/Libros";
 import Pronunciacion from "./views/Pronunciar";
+import Estadisticas from "./views/Estadisticas";
 import './App.css'
 import Clima from "./views/Clima";
 
@@ -30,7 +31,7 @@ return (
               <Route path="/libros" element={<ProtectedRoute element={<Libros />} />}/>
               <Route path="/clima" element={<ProtectedRoute element={<Clima />} />}/>
               <Route path="/pronunciacion" element={<ProtectedRoute element={<Pronunciacion/>} />}/>
-
+              <Route path="/estadisticas" element={<ProtectedRoute element={<Estadisticas/>} />}/>
             </Routes>
           </main>
       </Router>
