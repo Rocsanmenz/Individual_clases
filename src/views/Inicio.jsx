@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
-import ModalInstalacionIOS from "../components/inicio/ModalInstalacionIOS";
-
+import ModalInstalacionIOS from "../components/Inicio/ModalInstalacionIOS"
 const Inicio = () => {
   const [solicitudInstalacion, setSolicitudInstalacion] = useState(null);
   const [mostrarBotonInstalacion, setMostrarBotonInstalacion] = useState(false);
