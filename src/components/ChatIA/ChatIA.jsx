@@ -11,7 +11,7 @@ import {
   getDocs,
   doc,
 } from "firebase/firestore";
-import { db } from "../../database/firebaseconfig";
+import { db } from "../../database/firebaseConfig";
 import { Button, Form, ListGroup, Spinner, Modal } from "react-bootstrap";
 
 const ChatIA = ({ showChatModal, setShowChatModal }) => {
