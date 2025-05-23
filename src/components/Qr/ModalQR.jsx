@@ -2,33 +2,32 @@ import { Modal, Button } from "react-bootstrap";
 import QRCode from "react-qr-code";
 
 const ModalQR = ({ show, handleClose, qrUrl }) => {
-    return (
-        <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-            <Modal.Title>Código QR del PDF</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="text-center">
-            {qrUrl ? (
+  return (
+    <Modal show={show} onHide={handleClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Código QR del PDF</Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="text-center">
+        {qrUrl ? (
+          <div style={{ width: "100%", maxWidth: 300, margin: "0 auto" }}>
             <QRCode
-                title="Escanea para descargar el PDF"
-                value={qrUrl}
-                size={200}
-                fgColor="#0000FF"
-                bgColor="#FFFFFF"
-                style={{ borderRadius: "8px" }}
-                level="L"
+              value={qrUrl}
+              style={{ width: "100%", height: "auto" }}
+              title="Escanea para abrir el PDF"
+              level="L"
             />
-            ) : (
-            <p>No hay URL disponible para generar el QR.</p>
-            )}
-        </Modal.Body>
-        <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-            Cerrar
-            </Button>
-        </Modal.Footer>
-        </Modal>
-    );
+          </div>
+        ) : (
+          <p>No hay URL disponible para generar el QR.</p>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Cerrar
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
 };
 
 export default ModalQR;
