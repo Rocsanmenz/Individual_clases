@@ -1,12 +1,14 @@
 import React from "react";
 import { Table, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { BsClipboard, BsPencil, BsTrash } from "react-icons/bs"; // Iconos
+import { BsClipboard, BsPencil, BsTrash } from "react-icons/bs";
+import { BiSolidFilePdf } from "react-icons/bi"; // ✅ Icono PDF
 
 const TablaProductos = ({
   productos,
   openEditModal,
   openDeleteModal,
   handleCopy,
+  generarPDFDetalleProducto, // ✅ NUEVO
 }) => {
   return (
     <Table striped bordered hover responsive>
@@ -29,9 +31,23 @@ const TablaProductos = ({
           productos.map((producto) => (
             <tr key={producto.id}>
               <td>{producto.nombre}</td>
-              <td>C${producto.precio}</td>
+              <td>C${parseFloat(producto.precio).toFixed(2)}</td>
               <td>{producto.categoria}</td>
               <td>
+                <OverlayTrigger
+                  placement="top"
+                  overlay={<Tooltip>Generar PDF</Tooltip>}
+                >
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    className="me-1"
+                    onClick={() => generarPDFDetalleProducto(producto)}
+                  >
+                    <BiSolidFilePdf />
+                  </Button>
+                </OverlayTrigger>
+
                 <OverlayTrigger
                   placement="top"
                   overlay={<Tooltip>Editar</Tooltip>}

@@ -12,6 +12,7 @@ import Pronunciacion from "./views/Pronunciar";
 import Estadisticas from "./views/Estadisticas";
 import './App.css'
 import Clima from "./views/Clima";
+import Empleados from "./views/Empleados";
 
 function App() {
 
@@ -32,6 +33,7 @@ return (
               <Route path="/clima" element={<ProtectedRoute element={<Clima />} />}/>
               <Route path="/pronunciacion" element={<ProtectedRoute element={<Pronunciacion/>} />}/>
               <Route path="/estadisticas" element={<ProtectedRoute element={<Estadisticas/>} />}/>
+              <Route path="/empleados" element={<ProtectedRoute element={<Empleados/>} />}/>
             </Routes>
           </main>
       </Router>
