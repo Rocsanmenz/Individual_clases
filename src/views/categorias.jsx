@@ -192,7 +192,8 @@ const Categorias = () => {
   };
 
   return (
-    <Container className="mt-5">
+   <Container className="pt-5 mt-5">
+
       <h4>Gestión de Categorías</h4>
       <div className="d-flex gap-2 mb-3">
         <Button onClick={() => setShowModal(true)}>Agregar categoría</Button>
